@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ product.name }} | JOFA Rituals{% endblock %}
+
+{% block content %}
+<section class="py-24 bg-white">
+    <div class="container mx-auto px-6 md:px-12">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-24">
+            <!-- Image Gallery -->
+            <div class="space-y-6">
+                <div class="aspect-[4/5] bg-jofa-offwhite overflow-hidden shadow-2xl rounded-sm">
+                    {% if product.image %}
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}" class="w-full h-full object-cover">
+                    {% else %}
+                    <img src="https://images.unsplash.com/photo-1612817288484-6f916006741a?q=80&w=1000&auto=format&fit=crop"
+                        class="w-full h-full object-cover opacity-90" alt="Placeholder">
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Product Info -->
+            <div class="flex flex-col justify-center">
+                <nav class="flex mb-8 text-[11px] uppercase tracking-[0.2em] font-black text-gray-400">
+                    <a href="{% url 'core:home' %}" class="hover:text-jofa-gold">Essence</a>
+                    <span class="mx-3">/</span>
+                    <a href="{% url 'products:product_list' %}" class="hover:text-jofa-gold">{{ product.category.name }}</a>
+                </nav>
+
+                <h1 class="text-7xl serif text-jofa-dark mb-6 tracking-tight font-black leading-tight">{{ product.name }}</h1>
+                <div class="flex items-center flex-wrap gap-4 mb-10">
+                    <span class="text-4xl font-black text-black">XAF {{ product.price }}</span>
+                    <span
+                        class="bg-jofa-beige px-6 py-2 text-[10px] uppercase tracking-[0.2em] font-black text-jofa-dark border border-gray-100">{{ product.get_skin_type_display }} Skin</span>
+                    {% for coupon in product.coupons.all %}{% if coupon.is_valid %}
+                    <span class="bg-jofa-gold text-white px-6 py-2 text-[10px] uppercase tracking-widest font-black">
+                        {{ coupon.discount }}% OFF
+                    </span>
+                    {% endif %}{% endfor %}
+                </div>
+
+                <p class="text-xl text-gray-600 mb-12 leading-relaxed font-medium">{{ product.description }}</p>
+
+                <form action="{% url 'orders:cart_add' product.id %}" method="post" class="mb-16">
+                    {% csrf_token %}
+                    <div class="flex items-center space-x-6">
+                        <div class="flex items-center border-[3px] border-black">
+                            <button type="button" onclick="this.nextElementSibling.stepDown()"
+                                class="px-8 py-4 font-black text-xl hover:bg-black hover:text-white transition-colors">-</button>
+                            <input type="number" name="quantity" value="1" min="1"
+                                class="w-24 text-center font-black text-xl border-none focus:ring-0">
+                            <button type="button" onclick="this.previousElementSibling.stepUp()"
+                                class="px-8 py-4 font-black text-xl hover:bg-black hover:text-white transition-colors">+</button>
+                        </div>
+                        <button type="submit"
+                            class="flex-1 btn-gold py-6 text-[12px] uppercase tracking-[0.3em] font-black shadow-2xl">Add
+                            to Ritual</button>
+                        <a href="{% url 'products:wishlist_add' product.id %}"
+                            class="px-8 border border-jofa-gold flex items-center justify-center hover:bg-jofa-gold group transition-all"
+                            title="Add to Wishlist">
+                            <svg class="w-6 h-6 text-jofa-gold group-hover:text-white transition-colors" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                            </svg>
+                        </a>
+                    </div>
+                </form>
+
+                <div class="space-y-16 border-t border-gray-100 pt-16">
+                    <div>
+                        <h4 class="text-[12px] uppercase tracking-[0.4em] font-black text-jofa-gold mb-6">Secret
+                            Ingredients</h4>
+                        <p class="text-base text-gray-700 leading-relaxed font-bold italic">{{ product.ingredients|default:"A proprietary blend of botanical extracts." }}</p>
+                    </div>
+                    <div>
+                        <h4 class="text-[12px] uppercase tracking-[0.4em] font-black text-jofa-gold mb-6">The Ritual
+                        </h4>
+                        <p class="text-base text-gray-700 leading-relaxed font-bold">Warm a small amount between palms.
+                            Gently press onto clean, damp skin. Inhale the botanical essence for a moment of
+                            mindfulness. Repeat daily, morning and night, for absolute transformation.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Client Voices Section -->
+<section class="py-24 bg-jofa-offwhite border-t border-gray-50">
+    <div class="container mx-auto px-6 md:px-12 text-center">
+        <h2 class="text-4xl serif text-jofa-dark mb-4 font-black">Client Voices</h2>
+        <p class="text-gray-500 font-bold mb-16 uppercase tracking-widest text-xs">Transformations shared by our
+            community</p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-4xl mx-auto">
+            {% for review in reviews %}
+            <div
+                class="bg-white p-10 shadow-sm border border-gray-50 text-left transition-all duration-500 hover:shadow-xl group">
+                <div class="flex text-jofa-gold mb-4 group-hover:scale-110 transition-transform origin-left">
+                    {% for i in "12345"|make_list %}{% if forloop.counter <= review.rating %}★{% else %}☆{% endif %}{% endfor %} </div>
+                        <p class="text-gray-600 italic font-medium mb-6 leading-relaxed">"{{ review.comment }}"</p>
+                        <div class="flex items-center space-x-3">
+                            <div class="w-8 h-[1px] bg-jofa-gold"></div>
+                            <p class="text-[10px] font-black uppercase tracking-[0.2em] text-jofa-dark">{{ review.user.first_name|default:review.user.username }}</p>
+                        </div>
+                </div>
+                {% empty %}
+                <div class="col-span-2 text-center py-24 bg-white border border-dashed border-gray-200">
+                    <p class="text-gray-400 italic font-medium text-lg mb-4">No rituals shared yet.</p>
+                    <p class="text-[10px] uppercase tracking-widest font-black text-jofa-gold">Be the first to share
+                        your journey</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+</section>
+{% endblock %}

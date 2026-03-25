@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+
+{% block title %}Shop All | JOFA{% endblock %}
+
+{% block content %}
+<section class="py-24 bg-jofa-offwhite min-h-screen">
+    <div class="container mx-auto px-6 md:px-12">
+        <div class="flex flex-col md:flex-row justify-between items-end mb-16">
+            <div class="max-w-2xl">
+                <h1 class="text-6xl serif text-jofa-onyx mb-6 tracking-tight">The <span
+                        class="text-jofa-gold">Collection</span></h1>
+                <p class="text-lg text-gray-600 font-medium leading-relaxed">Our curated selection of botanical
+                    essentials, meticulously formulated for your skin's unique journey.</p>
+            </div>
+            <div class="mt-8 md:mt-0">
+                <form method="get" class="flex items-center space-x-4">
+                    <select name="category" onchange="this.form.submit()"
+                        class="bg-white border-none p-4 text-[10px] font-black uppercase tracking-widest outline-none focus:ring-1 ring-jofa-gold shadow-sm">
+                        <option value="">Filter by Ritual</option>
+                        {% for cat in categories %}
+                        <option value="{{ cat.slug }}" {% if request.GET.category == cat.slug %}selected{% endif %}>{{ cat.name }}</option>
+                        {% endfor %}
+                    </select>
+                </form>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-16">
+            {% for product in products %}
+            <div class="group relative">
+                <a href="{{ product.get_absolute_url }}"
+                    class="block overflow-hidden bg-white aspect-[3/4] mb-8 shadow-sm group-hover:shadow-2xl transition-all duration-700">
+                    {% if product.image %}
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}"
+                        class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000">
+                    {% else %}
+                    <img src="https://images.unsplash.com/photo-1556228720-195a672e8a03?q=80&w=800&auto=format&fit=crop"
+                        alt="Placeholder"
+                        class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000 opacity-90">
+                    {% endif %}
+                    <div class="absolute top-4 left-4 flex flex-col space-y-2">
+                        <span
+                            class="bg-white text-black text-[9px] font-black uppercase tracking-widest px-4 py-2 shadow-sm">{{ product.category.name }}</span>
+                        {% for coupon in product.coupons.all %}
+                        {% if coupon.is_valid %}
+                        <span
+                            class="bg-jofa-gold text-white text-[9px] font-black uppercase tracking-widest px-4 py-2 shadow-sm">
+                            {{ coupon.discount }}% OFF
+                        </span>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                    <div class="absolute top-4 right-4 z-20">
+                        {% if request.user.is_authenticated and product in request.user.wishlist.products.all %}
+                        <a href="{% url 'products:wishlist_remove' product.id %}"
+                            class="text-red-500 hover:text-red-700 transition-colors block"
+                            title="Remove from Wishlist">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path fill-rule="evenodd"
+                                    d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                        </a>
+                        {% else %}
+                        <a href="{% url 'products:wishlist_add' product.id %}"
+                            class="text-gray-400 hover:text-jofa-gold transition-colors block" title="Add to Wishlist">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                            </svg>
+                        </a>
+                        {% endif %}
+                    </div>
+                </a>
+                <div class="text-center px-4">
+                    <h3
+                        class="text-2xl serif text-jofa-onyx mb-2 group-hover:text-jofa-gold transition-colors font-bold">
+                        {{ product.name }}</h3>
+                    <p class="text-[10px] uppercase tracking-[0.2em] font-black text-gray-400 mb-4">{{ product.get_skin_type_display }} Ritual</p>
+                    <p class="text-xl font-bold text-black mb-6">XAF {{ product.price }}</p>
+                    <form action="{% url 'orders:cart_add' product.id %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="quantity" value="1">
+                        <button type="submit"
+                            class="w-full btn-gold py-4 text-[10px] uppercase tracking-[0.3em] font-black shadow-lg">Add
+                            to Ritual</button>
+                    </form>
+                </div>
+            </div>
+            {% empty %}
+            <p class="col-span-full text-center py-24 text-gray-500 italic">No products found in this category.</p>
+            {% endfor %}
+        </div>
+
+        {% if is_paginated %}
+        <div class="mt-16 flex justify-center space-x-4">
+            {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}"
+                class="text-jofa-gold uppercase text-[10px] tracking-widest font-bold">Prev</a>
+            {% endif %}
+            <span class="text-[10px] uppercase tracking-widest font-bold italic">{{ page_obj.number }} / {{ page_obj.paginator.num_pages }}</span>
+            {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}"
+                class="text-jofa-gold uppercase text-[10px] tracking-widest font-bold">Next</a>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}
