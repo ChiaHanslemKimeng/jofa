@@ -53,6 +53,18 @@ class Product(models.Model):
     def get_absolute_url(self):
         return reverse('products:product_detail', args=[self.slug])
 
+    @property
+    def get_discounted_price(self):
+        active_coupons = [c for c in self.coupons.all() if c.is_valid()]
+        if active_coupons:
+            best_discount = max(c.discount for c in active_coupons)
+            return self.price * (100 - best_discount) / 100
+        return self.price
+
+    @property
+    def has_discount(self):
+        return any(c.is_valid() for c in self.coupons.all())
+
     def __str__(self):
         return self.name
 

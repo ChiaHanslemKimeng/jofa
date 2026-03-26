@@ -63,22 +63,27 @@ class Cart(object):
 
         coupon = self.coupon
         for item in cart.values():
-            item['price'] = Decimal(item['price'])
-            item['original_price'] = item['price']
+            product = item['product']
+            base_price = Decimal(item['price'])
+            item['original_price'] = base_price
             
+            if product.has_discount:
+                item['price'] = Decimal(str(product.get_discounted_price))
+                item['discount_applied'] = True
+            else:
+                item['price'] = base_price
+                item['discount_applied'] = False
+
             # Apply coupon if applicable
             if coupon and coupon.is_valid():
                 # If products are specified, check if this product is one of them
-                if not coupon.products.exists() or item['product'] in coupon.products.all():
+                if not coupon.products.exists() or product in coupon.products.all():
                     discount_factor = Decimal(1 - (coupon.discount / 100))
                     item['price'] = (item['price'] * discount_factor).quantize(Decimal('0.01'))
                     item['discount_applied'] = True
-                else:
-                    item['discount_applied'] = False
-            else:
-                item['discount_applied'] = False
 
             item['total_price'] = item['price'] * item['quantity']
+            item['original_total_price'] = item['original_price'] * item['quantity']
             yield item
 
     def __len__(self):
@@ -93,9 +98,17 @@ class Cart(object):
         products = {str(p.id): p for p in Product.objects.filter(id__in=product_ids)}
 
         for product_id, item in self.cart.items():
-            price = Decimal(item['price'])
             product = products.get(product_id)
-            if is_coupon_valid and product:
+            if not product:
+                continue
+            
+            base_price = Decimal(item['price'])
+            if product.has_discount:
+                price = Decimal(str(product.get_discounted_price))
+            else:
+                price = base_price
+
+            if is_coupon_valid:
                 if not coupon.products.exists() or product in coupon.products.all():
                     price = (price * Decimal(1 - (coupon.discount / 100))).quantize(Decimal('0.01'))
             total += price * item['quantity']

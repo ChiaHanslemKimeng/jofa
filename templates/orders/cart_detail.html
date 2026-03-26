@@ -28,8 +28,7 @@
                         <div class="flex-grow">
                             <h3 class="text-3xl serif text-jofa-dark mb-2 font-black"><a
                                     href="{{ product.get_absolute_url }}">{{ product.name }}</a></h3>
-                            <p class="text-[10px] uppercase tracking-widest font-black text-jofa-gold mb-6">{{
-                                product.category.name }}</p>
+                            <p class="text-[10px] uppercase tracking-widest font-black text-jofa-gold mb-6">{{ product.category.name }}</p>
 
                             <div class="flex items-center justify-between">
                                 <div class="flex items-center border-[3px] border-black">
@@ -49,7 +48,12 @@
                                             class="px-6 py-2 font-black text-lg hover:bg-black hover:text-white transition-colors">+</button>
                                     </form>
                                 </div>
-                                <p class="text-2xl font-black text-black">XAF {{ item.total_price }}</p>
+                                <div class="text-right">
+                                    {% if item.discount_applied %}
+                                    <p class="text-sm font-black text-gray-400 line-through">XAF {{ item.original_total_price }}</p>
+                                    {% endif %}
+                                    <p class="text-2xl font-black text-black">XAF {{ item.total_price }}</p>
+                                </div>
                                 <form action="{% url 'orders:cart_remove' product.id %}" method="post">
                                     {% csrf_token %}
                                     <button type="submit" class="text-red-500 hover:text-red-700 p-2">

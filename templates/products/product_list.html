@@ -77,7 +77,14 @@
                         class="text-2xl serif text-jofa-onyx mb-2 group-hover:text-jofa-gold transition-colors font-bold">
                         {{ product.name }}</h3>
                     <p class="text-[10px] uppercase tracking-[0.2em] font-black text-gray-400 mb-4">{{ product.get_skin_type_display }} Ritual</p>
-                    <p class="text-xl font-bold text-black mb-6">XAF {{ product.price }}</p>
+                    <p class="text-xl font-bold text-black mb-6">
+                        {% if product.has_discount %}
+                        <span class="line-through text-gray-400 text-sm mr-2">XAF {{ product.price }}</span>
+                        XAF {{ product.get_discounted_price|floatformat:2 }}
+                        {% else %}
+                        XAF {{ product.price }}
+                        {% endif %}
+                    </p>
                     <form action="{% url 'orders:cart_add' product.id %}" method="post">
                         {% csrf_token %}
                         <input type="hidden" name="quantity" value="1">
