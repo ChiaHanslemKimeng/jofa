@@ -60,6 +60,25 @@
                     </div>
                 </div>
 
+                <!-- Jofa Rewards Summary -->
+                <div class="bg-jofa-onyx text-white p-12 shadow-sm rounded-sm mb-12">
+                    <div class="flex justify-between items-center border-b border-gray-700 pb-4 mb-8">
+                        <h3 class="text-xl serif font-black text-jofa-gold">Jofa Rewards</h3>
+                        <a href="{% url 'products:product_list' %}"
+                            class="text-[10px] uppercase tracking-widest font-black text-white hover:text-jofa-gold transition-colors">Earn
+                            More</a>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="text-5xl font-black serif text-jofa-gold mr-6">{{ available_points }}</div>
+                        <div>
+                            <p class="text-[10px] uppercase tracking-widest font-bold text-gray-400">Available Points
+                            </p>
+                            <p class="text-xs mt-1 text-gray-300">Use points at checkout to unlock exclusive rituals.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="bg-white p-12 shadow-sm rounded-sm">
                     <h3 class="text-xl serif text-jofa-dark mb-8 border-b border-gray-50 pb-4">Recent Orders</h3>
                     {% if orders %}

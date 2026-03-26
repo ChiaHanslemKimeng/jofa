@@ -11,6 +11,8 @@ class Cart(object):
         self.cart = cart
         # store current coupon id
         self.coupon_id = self.session.get('coupon_id')
+        # store applied points
+        self.applied_points = self.session.get('applied_points', 0)
 
     def add(self, product, quantity=1, override_quantity=False):
         product_id = str(product.id)
@@ -53,6 +55,26 @@ class Cart(object):
         except Coupon.DoesNotExist:
             pass
         return False
+
+    def apply_points(self, points):
+        """
+        Store the number of points the user wants to redeem.
+        """
+        self.session['applied_points'] = points
+        self.applied_points = points
+        self.save()
+
+    def get_points_discount(self):
+        """
+        Calculate the monetary value of the applied points.
+        """
+        if self.applied_points:
+            from rewards.models import RewardSetting
+            setting = RewardSetting.objects.first()
+            if setting and setting.points_to_cash_ratio:
+                return Decimal(self.applied_points) * setting.points_to_cash_ratio
+        return Decimal('0.00')
+
 
     def __iter__(self):
         product_ids = self.cart.keys()
@@ -112,10 +134,15 @@ class Cart(object):
                 if not coupon.products.exists() or product in coupon.products.all():
                     price = (price * Decimal(1 - (coupon.discount / 100))).quantize(Decimal('0.01'))
             total += price * item['quantity']
-        return total
+        
+        # Apply points discount
+        points_discount = self.get_points_discount()
+        return max(Decimal('0.00'), total - points_discount)
 
     def clear(self):
         del self.session[settings.CART_SESSION_ID]
         if 'coupon_id' in self.session:
             del self.session['coupon_id']
+        if 'applied_points' in self.session:
+            del self.session['applied_points']
         self.save()

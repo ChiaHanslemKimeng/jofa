@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import Profile
 from .forms import UserUpdateForm, ProfileUpdateForm
+from rewards.utils import get_user_points
 
 class SignUpView(CreateView):
     form_class = UserCreationForm
@@ -30,6 +31,8 @@ class ProfileView(LoginRequiredMixin, TemplateView):
         # Check if orders exists (related name might be different or not defined)
         if hasattr(self.request.user, 'orders'):
             context['orders'] = self.request.user.orders.all()
+        # Add available points
+        context['available_points'] = get_user_points(self.request.user)
         return context
 
 @login_required

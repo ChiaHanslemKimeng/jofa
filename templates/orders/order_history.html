@@ -22,8 +22,7 @@
                         <h3
                             class="text-xl serif font-black text-jofa-onyx group-hover:text-jofa-gold transition-colors">
                             Order #{{ order.id }}</h3>
-                        <p class="text-[10px] uppercase tracking-widest font-black text-gray-400 mt-2">{{
-                            order.created|date:"F d, Y" }} at {{ order.created|time:"H:i" }}</p>
+                        <p class="text-[10px] uppercase tracking-widest font-black text-gray-400 mt-2">{{ order.created|date:"F d, Y" }} at {{ order.created|time:"H:i" }}</p>
                     </div>
                     <div class="text-left md:text-right">
                         <span
@@ -54,8 +53,7 @@
                         <ul class="space-y-4">
                             {% for item in order.items.all %}
                             <li class="flex justify-between items-center text-sm">
-                                <span class="font-bold text-jofa-onyx">{{ item.quantity }}x {{ item.product.name
-                                    }}</span>
+                                <span class="font-bold text-jofa-onyx">{{ item.quantity }}x {{ item.product.name }}</span>
                                 <span class="text-gray-400">XAF {{ item.price }}</span>
                             </li>
                             {% endfor %}

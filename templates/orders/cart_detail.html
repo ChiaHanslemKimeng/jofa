@@ -103,11 +103,62 @@
                     {% endif %}
                 </form>
 
+                <!-- Points Redemption Form -->
+                {% if user.is_authenticated %}
+                <div class="mb-8 p-6 bg-gray-50 border border-gray-100">
+                    <h4 class="text-sm font-black uppercase tracking-widest text-jofa-dark mb-2">Jofa Rewards</h4>
+                    <p class="text-xs text-gray-500 mb-4">Available Points: <strong>{{ available_points }}</strong></p>
+                    {% if available_points > 0 %}
+                    <form action="{% url 'orders:points_apply' %}" method="post">
+                        {% csrf_token %}
+                        <div class="flex">
+                            <input type="number" name="points" placeholder="Points to redeem..."
+                                max="{{ available_points }}" min="1"
+                                class="flex-grow bg-white text-sm px-4 py-3 outline-none border border-gray-200 focus:border-jofa-gold transition-colors"
+                                value="{{ cart.applied_points|default:'' }}">
+                            <button type="submit"
+                                class="bg-black text-white px-5 py-3 text-[10px] font-black uppercase tracking-widest hover:bg-jofa-gold hover:text-black transition-colors">
+                                Redeem
+                            </button>
+                        </div>
+                    </form>
+                    {% if cart.applied_points %}
+                    <p class="text-jofa-gold text-[10px] font-black uppercase tracking-widest mt-2 block">
+                        ✓ {{ cart.applied_points }} points applied (XAF -{{ cart.get_points_discount }})
+                    </p>
+                    <form action="{% url 'orders:points_apply' %}" method="post" class="mt-2">
+                        {% csrf_token %}
+                        <input type="hidden" name="points" value="0">
+                        <button type="submit" class="text-xs text-red-500 hover:text-red-700 underline">Remove
+                            Points</button>
+                    </form>
+                    {% endif %}
+                    {% else %}
+                    <p class="text-[10px] text-gray-400 italic">Earn points with every purchase.</p>
+                    {% endif %}
+                </div>
+                {% endif %}
+
+
                 <div class="space-y-6 mb-12">
                     <div class="flex justify-between items-center">
-                        <span class="text-[11px] uppercase tracking-widest font-bold text-gray-400">Subtotal</span>
+                        <span class="text-[11px] uppercase tracking-widest font-bold text-gray-400">Total Before
+                            Points</span>
+                        <!-- We calculate total without points by adding them back conceptually if needed, but get_total_price is already net of points. Let's just use get_total_price as grand total, and list points discount separately if applied. Actually, get_total_price includes points discount. Let's show points discount. -->
                         <span class="text-xl font-black">XAF {{ cart.get_total_price }}</span>
                     </div>
+                    {% if cart.applied_points %}
+                    <div class="flex justify-between items-center text-jofa-gold">
+                        <span class="text-[11px] uppercase tracking-widest font-bold flex items-center">
+                            <svg class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            Points Applied
+                        </span>
+                        <span class="text-sm font-bold">- XAF {{ cart.get_points_discount }}</span>
+                    </div>
+                    {% endif %}
                     <div class="flex justify-between items-center">
                         <span class="text-[11px] uppercase tracking-widest font-bold text-gray-400">Shipping
                             Ritual</span>

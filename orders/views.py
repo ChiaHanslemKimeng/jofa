@@ -6,6 +6,8 @@ from .cart import Cart
 from products.models import Product, Coupon
 from .models import Order, OrderItem
 from django.urls import reverse_lazy
+from rewards.utils import award_points, get_user_points
+from rewards.models import RewardPoint
 
 class CartAddView(View):
     def post(self, request, product_id):
@@ -24,6 +26,41 @@ class CartRemoveView(View):
 
 class CartDetailView(TemplateView):
     template_name = 'orders/cart_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.request.user.is_authenticated:
+            context['available_points'] = get_user_points(self.request.user)
+        else:
+            context['available_points'] = 0
+        from rewards.models import RewardSetting
+        setting = RewardSetting.objects.first()
+        context['points_to_cash_ratio'] = setting.points_to_cash_ratio if setting else 0
+        return context
+
+class RedeemPointsView(LoginRequiredMixin, View):
+    def post(self, request):
+        cart = Cart(request)
+        points_to_redeem = request.POST.get('points')
+        
+        try:
+            points_to_redeem = int(points_to_redeem)
+        except (ValueError, TypeError):
+            points_to_redeem = 0
+
+        available_points = get_user_points(request.user)
+
+        if points_to_redeem > 0 and points_to_redeem <= available_points:
+            cart.apply_points(points_to_redeem)
+            from django.contrib import messages
+            messages.success(request, f'Successfully applied {points_to_redeem} points to your cart.')
+        else:
+            cart.apply_points(0)
+            from django.contrib import messages
+            messages.error(request, 'Invalid points amount.')
+        
+        return redirect('orders:cart_detail')
+
 
 class CouponApplyView(View):
     def post(self, request):
@@ -55,6 +92,18 @@ class OrderCreateView(LoginRequiredMixin, CreateView):
                 price=item['price'],
                 quantity=item['quantity']
             )
+        # Award points to the user for this purchase
+        if self.request.user.is_authenticated:
+            # Handle points redemption record if applied
+            if getattr(cart, 'applied_points', 0) > 0:
+                RewardPoint.objects.create(
+                    user=self.request.user,
+                    points=-cart.applied_points,
+                    transaction_type='redeemed',
+                    order_reference=str(order.id)
+                )
+            # award_points is now handled by the post_save signal on Order completion
+
         cart.clear()
         return super().form_valid(form)
 

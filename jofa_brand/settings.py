@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'blog',
     'reviews',
     'core',
+    'rewards',
 
     # Third Party
 ]
