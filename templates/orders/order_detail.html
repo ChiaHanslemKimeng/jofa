@@ -99,14 +99,13 @@
                 <div class="text-right">
                     <h1 class="text-3xl serif text-jofa-onyx mb-2">Order Receipt</h1>
                     <p class="text-sm font-bold text-jofa-gold">#{{ order.id }}</p>
-                    <p class="text-[10px] uppercase tracking-widest text-gray-400 mt-2">{{ order.created|date:"F d, Y"
-                        }}</p>
+                    <p class="text-[10px] uppercase tracking-widest text-gray-400 mt-2">{{ order.created|date:"F d, Y" }} at {{ order.created|time:"H:i" }}</p>
                 </div>
             </div>
 
             {% if order.status == 'cancelled' %}
             <div class="bg-red-50 text-red-600 p-6 mb-12 text-center rounded-sm border border-red-100">
-                <p class="text-xs uppercase tracking-widest font-black">This ritual has been cancelled</p>
+                <p class="text-xs uppercase tracking-widest font-black">This order has been cancelled</p>
             </div>
             {% endif %}
 
