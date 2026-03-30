@@ -10,7 +10,7 @@
     <link rel="shortcut icon" href="{% static 'images/logo.jpg' %}">
     <!-- Google Fonts -->
     <link
-        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;600&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Inter:wght@300;400;600&display=swap"
         rel="stylesheet">
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -21,14 +21,15 @@
                     colors: {
                         jofa: {
                             beige: '#F3EBE5',
-                            offwhite: '#FDFBF9',
+                            offwhite: '#F3EBE5',
                             gold: '#A58B7C',
                             onyx: '#0F2D32',
                         }
                     },
                     fontFamily: {
-                        serif: ['"Playfair Display"', 'serif'],
+                        serif: ['Outfit', 'sans-serif'],
                         sans: ['Inter', 'sans-serif'],
+                        header: ['Outfit', 'sans-serif'],
                     }
                 }
             }
@@ -37,7 +38,7 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #FDFBF9;
+            background-color: #F3EBE5;
             color: #0F2D32;
             font-weight: 400;
         }
@@ -46,9 +47,10 @@
         h2,
         h3,
         .serif {
-            font-family: 'Playfair Display', serif;
-            font-weight: 700;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
             color: #0F2D32;
+            letter-spacing: -0.02em;
         }
 
         p {
@@ -79,6 +81,11 @@
             letter-spacing: 0.05em;
         }
 
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
         .nav-link::after {
             content: '';
             position: absolute;
@@ -86,20 +93,57 @@
             height: 2px;
             bottom: -4px;
             left: 0;
-            background-color: #D4AF37;
+            background-color: #A58B7C;
             transition: width 0.3s ease;
         }
 
-        .nav-link:hover {
-            color: #D4AF37;
+        .nav-link:hover,
+        .nav-link.active {
+            color: #A58B7C;
         }
 
-        .nav-link:hover::after {
+        .nav-link:hover::after,
+        .nav-link.active::after {
             width: 100%;
         }
 
+        .btn-gold {
+            background-color: #A58B7C;
+            color: #FFFFFF;
+            padding: 1rem 3rem;
+            display: inline-block;
+            text-align: center;
+            white-space: nowrap;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .btn-gold::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.7s;
+            z-index: -1;
+        }
+
+        .btn-gold:hover {
+            background-color: #0F2D32;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px -10px rgba(165, 139, 124, 0.5);
+        }
+
+        .btn-gold:hover::before {
+            left: 100%;
+        }
+
         .glass {
-            background: rgba(255, 255, 255, 0.95);
+            background: #F3EBE5;
             backdrop-filter: blur(20px);
             border-bottom: 1px solid rgba(0, 0, 0, 0.05);
         }
@@ -115,18 +159,24 @@
                 class="h-12 md:h-16 w-auto transition-transform duration-500 group-hover:scale-105">
         </a>
         <div class="hidden lg:flex space-x-10 items-center uppercase text-[11px] tracking-[0.2em] font-black">
-            <a href="{% url 'core:home' %}" class="nav-link">Home</a>
-            <a href="{% url 'products:product_list' %}" class="nav-link">Shop</a>
-            <a href="{% url 'blog:post_list' %}" class="nav-link">Blog</a>
-            <a href="{% url 'core:faq' %}" class="nav-link">FAQ</a>
-            <a href="{% url 'core:about' %}" class="nav-link">About</a>
-            <a href="{% url 'core:contact' %}" class="nav-link">Contact</a>
+            <a href="{% url 'core:home' %}"
+                class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}">Home</a>
+            <a href="{% url 'products:product_list' %}"
+                class="nav-link {% if request.resolver_match.url_name == 'product_list' or request.resolver_match.url_name == 'product_detail' %}active{% endif %}">Shop</a>
+            <a href="{% url 'blog:post_list' %}"
+                class="nav-link {% if request.resolver_match.url_name == 'post_list' or request.resolver_match.url_name == 'post_detail' %}active{% endif %}">Blog</a>
+            <a href="{% url 'core:faq' %}"
+                class="nav-link {% if request.resolver_match.url_name == 'faq' %}active{% endif %}">FAQ</a>
+            <a href="{% url 'core:about' %}"
+                class="nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}">About</a>
+            <a href="{% url 'core:contact' %}"
+                class="nav-link {% if request.resolver_match.url_name == 'contact' %}active{% endif %}">Contact</a>
         </div>
         <div class="flex items-center space-x-4 md:space-x-8">
             <!-- Search -->
             <form action="{% url 'products:product_list' %}" method="get" class="relative hidden lg:flex items-center">
-                <input type="text" name="q" placeholder="Search Rituals..."
-                    class="bg-jofa-offwhite border-none p-4 text-[10px] font-black uppercase tracking-widest outline-none focus:ring-1 ring-jofa-gold w-48 placeholder-gray-400">
+                <input type="text" name="q" placeholder="Search Products..."
+                    class="bg-[#EBDDCC]/50 border-none p-4 text-[10px] font-black uppercase tracking-widest outline-none focus:ring-1 ring-jofa-gold w-48 placeholder-gray-400">
                 <button type="submit" class="absolute right-4 text-gray-400 hover:text-jofa-gold transition-colors">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
                         stroke="currentColor">
@@ -152,7 +202,7 @@
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24"
                     stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
-                        d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                        d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                 </svg>
                 {% if cart|length > 0 %}
                 <span
@@ -184,7 +234,7 @@
 
     <!-- Mobile Menu Drawer -->
     <div id="mobile-drawer"
-        class="fixed inset-0 z-[60] bg-white transform translate-x-full transition-transform duration-500 ease-in-out lg:hidden">
+        class="fixed inset-0 z-[60] bg-jofa-beige transform translate-x-full transition-transform duration-500 ease-in-out lg:hidden">
         <div class="flex flex-col h-full p-12">
             <div class="flex justify-between items-center mb-16">
                 <img src="{% static 'images/logo.jpg' %}" alt="JOFA Logo" class="h-12 w-auto">
@@ -196,12 +246,28 @@
                     </svg>
                 </button>
             </div>
-            <nav class="flex flex-col space-y-6 text-xl font-bold text-jofa-onyx uppercase tracking-[0.15em]">
-                <a href="{% url 'core:home' %}" class="hover:text-jofa-gold transition-colors">Home</a>
-                <a href="{% url 'products:product_list' %}" class="hover:text-jofa-gold transition-colors">Shop</a>
-                <a href="{% url 'blog:post_list' %}" class="hover:text-jofa-gold transition-colors">Blog</a>
-                <a href="{% url 'core:about' %}" class="hover:text-jofa-gold transition-colors">About</a>
-                <a href="{% url 'core:contact' %}" class="hover:text-jofa-gold transition-colors">Contact</a>
+            <form action="{% url 'products:product_list' %}" method="get" class="relative flex items-center mb-8">
+                <input type="text" name="q" placeholder="Search Rituals..."
+                    class="bg-[#EBDDCC]/50 border-none p-4 w-full text-[10px] font-black uppercase tracking-widest outline-none focus:ring-1 ring-jofa-gold placeholder-gray-400">
+                <button type="submit" class="absolute right-4 text-gray-400 hover:text-jofa-gold transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                </button>
+            </form>
+            <nav class="flex flex-col space-y-8 text-sm font-black text-jofa-onyx uppercase tracking-[0.3em]">
+                <a href="{% url 'core:home' %}"
+                    class="{% if request.resolver_match.url_name == 'home' %}text-jofa-gold{% endif %} hover:text-jofa-gold transition-colors">Home</a>
+                <a href="{% url 'products:product_list' %}"
+                    class="{% if request.resolver_match.url_name == 'product_list' or request.resolver_match.url_name == 'product_detail' %}text-jofa-gold{% endif %} hover:text-jofa-gold transition-colors">Shop</a>
+                <a href="{% url 'blog:post_list' %}"
+                    class="{% if request.resolver_match.url_name == 'post_list' or request.resolver_match.url_name == 'post_detail' %}text-jofa-gold{% endif %} hover:text-jofa-gold transition-colors">Blog</a>
+                <a href="{% url 'core:about' %}"
+                    class="{% if request.resolver_match.url_name == 'about' %}text-jofa-gold{% endif %} hover:text-jofa-gold transition-colors">About</a>
+                <a href="{% url 'core:contact' %}"
+                    class="{% if request.resolver_match.url_name == 'contact' %}text-jofa-gold{% endif %} hover:text-jofa-gold transition-colors">Contact</a>
             </nav>
             <div class="mt-auto pt-12 border-t border-gray-100 flex flex-col space-y-6">
                 {% if user.is_authenticated %}
@@ -213,7 +279,8 @@
                         class="text-sm font-black uppercase tracking-widest text-red-500">Logout</button>
                 </form>
                 {% else %}
-                <a href="{% url 'accounts:login' %}" class="btn-gold text-center py-5 rounded-sm">Join Ritual</a>
+                <a href="{% url 'accounts:login' %}" class="btn-gold text-center py-3 md:py-5 rounded-sm">Join
+                    Ritual</a>
                 {% endif %}
             </div>
         </div>

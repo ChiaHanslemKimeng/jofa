@@ -3,7 +3,7 @@
 {% block title %}My Profile | JOFA{% endblock %}
 
 {% block content %}
-<section class="py-24 bg-jofa-offwhite">
+<section class="py-24 bg-jofa-beige">
     <div class="container mx-auto px-6 md:px-12">
         <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
 
@@ -36,7 +36,7 @@
 
             <!-- Dashboard -->
             <div class="col-span-3">
-                <div class="bg-white p-12 shadow-sm rounded-sm mb-12">
+                <div class="bg-jofa-beige p-12 shadow-sm rounded-sm mb-12">
                     <div class="flex justify-between items-center border-b border-gray-50 pb-4 mb-8">
                         <h3 class="text-xl serif text-jofa-dark font-black">Personal Details</h3>
                         <a href="{% url 'accounts:profile_update' %}"
@@ -79,12 +79,12 @@
                     </div>
                 </div>
 
-                <div class="bg-white p-12 shadow-sm rounded-sm">
+                <div class="bg-jofa-beige p-12 shadow-sm rounded-sm">
                     <h3 class="text-xl serif text-jofa-dark mb-8 border-b border-gray-50 pb-4">Recent Orders</h3>
                     {% if orders %}
                     <div class="space-y-6">
                         {% for order in orders|slice:":3" %}
-                        <div class="flex justify-between items-center bg-jofa-offwhite p-6 rounded-sm">
+                        <div class="flex justify-between items-center bg-jofa-beige p-6 rounded-sm">
                             <div>
                                 <h4 class="text-sm font-bold uppercase tracking-widest mb-1">Order #{{ order.id }}</h4>
                                 <p class="text-[10px] text-gray-500">{{ order.created|date:"F d, Y" }}</p>
@@ -92,7 +92,7 @@
                             <div class="text-right">
                                 <p class="text-sm font-bold text-jofa-gold">XAF {{ order.get_total_cost }}</p>
                                 <span
-                                    class="text-[9px] uppercase tracking-widest font-bold bg-white px-3 py-1 mt-2 inline-block shadow-sm">{{ order.get_status_display }}</span>
+                                    class="text-[9px] uppercase tracking-widest font-bold bg-jofa-beige px-3 py-1 mt-2 inline-block shadow-sm">{{ order.get_status_display }}</span>
                                 <a href="{% url 'orders:order_detail' order.id %}"
                                     class="block mt-3 text-[9px] uppercase tracking-widest font-black text-jofa-onyx hover:text-jofa-gold transition-colors">View
                                     Receipt</a>

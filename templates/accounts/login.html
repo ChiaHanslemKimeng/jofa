@@ -4,7 +4,7 @@
 
 {% block content %}
 <section class="py-32 bg-jofa-beige flex items-center justify-center min-h-[80vh]">
-    <div class="w-full max-w-md bg-white p-12 shadow-xl rounded-sm">
+    <div class="w-full max-w-md bg-jofa-beige p-12 shadow-xl rounded-sm">
         <h1 class="text-3xl serif text-jofa-dark mb-8 text-center uppercase tracking-widest">Sign In</h1>
         <form method="post" class="space-y-6">
             {% csrf_token %}
@@ -23,7 +23,7 @@
                 {% endif %}
             </div>
             <button type="submit"
-                class="w-full btn-gold py-4 uppercase text-xs tracking-widest font-bold shadow-lg mt-4">Login</button>
+                class="w-full btn-gold py-3 md:py-4 uppercase text-xs tracking-widest font-bold shadow-lg mt-4">Login</button>
         </form>
         <div class="mt-8 text-center">
             <p class="text-[10px] uppercase tracking-widest font-bold text-gray-400">

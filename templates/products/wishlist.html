@@ -4,7 +4,7 @@
 {% block title %}My Ritual Wishlist | JOFA{% endblock %}
 
 {% block content %}
-<section class="py-32 bg-jofa-offwhite min-h-screen">
+<section class="py-32 bg-jofa-beige min-h-screen">
     <div class="container mx-auto px-6 md:px-12">
         <div class="max-w-4xl mx-auto text-center mb-24">
             <span class="text-xs uppercase tracking-[0.5em] font-black text-jofa-gold mb-8 block">Your Curated
@@ -16,7 +16,7 @@
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-16">
             {% for product in wishlist.products.all %}
-            <div class="group bg-white p-8 shadow-sm border border-gray-50 flex flex-col relative">
+            <div class="group bg-jofa-beige p-8 shadow-sm border border-gray-50 flex flex-col relative">
                 <!-- Remove from Wishlist -->
                 <a href="{% url 'products:wishlist_remove' product.id %}"
                     class="absolute top-4 right-4 text-gray-300 hover:text-red-400 transition-colors z-20"
@@ -29,7 +29,7 @@
                 </a>
 
                 <a href="{{ product.get_absolute_url }}"
-                    class="block overflow-hidden aspect-square mb-6 bg-jofa-offwhite">
+                    class="block overflow-hidden aspect-square mb-6 bg-jofa-beige">
                     {% if product.image %}
                     <img src="{{ product.image.url }}" alt="{{ product.name }}"
                         class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000">
@@ -47,16 +47,16 @@
                         {% csrf_token %}
                         <input type="hidden" name="quantity" value="1">
                         <button type="submit"
-                            class="w-full btn-gold py-4 text-[10px] uppercase tracking-[0.3em] font-black">Move to
+                            class="w-full btn-gold py-3 md:py-4 text-[10px] uppercase tracking-[0.3em] font-black">Move to
                             Cart</button>
                     </form>
                 </div>
             </div>
             {% empty %}
-            <div class="col-span-full py-32 text-center bg-white border border-dashed border-gray-200">
+            <div class="col-span-full py-32 text-center bg-jofa-beige border border-dashed border-gray-200">
                 <p class="text-gray-400 italic text-2xl mb-8">Your wishlist is currently empty.</p>
                 <a href="{% url 'products:product_list' %}"
-                    class="btn-gold px-12 py-5 inline-block text-[10px] uppercase tracking-[0.2em] font-bold">Discover
+                    class="btn-gold px-6 md:px-8 md:px-12 py-3 md:py-5 inline-block text-[10px] uppercase tracking-[0.2em] font-bold">Discover
                     the Collection</a>
             </div>
             {% endfor %}

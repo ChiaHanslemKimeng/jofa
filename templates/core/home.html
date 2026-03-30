@@ -6,91 +6,53 @@
 {% block content %}
 <!-- Hero Section with Swiper Slider -->
 <section class="h-screen relative overflow-hidden">
+    <!-- Centralized Tagline Overlay -->
+    <div class="absolute inset-0 z-20 flex items-center justify-center pointer-events-none">
+        <div class="text-center px-6">
+            <h1
+                class="text-white text-2xl md:text-5xl lg:text-6xl font-black uppercase tracking-[0.6em] md:tracking-[1em] leading-tight animate-fade-in-up transition-all duration-1000">
+                Step Into Your Natural Glow
+            </h1>
+        </div>
+    </div>
+
     <div class="swiper mainHeroSwiper h-full w-full">
         <div class="swiper-wrapper">
             <!-- Slide 1 -->
-            <div class="swiper-slide relative flex items-center justify-center">
+            <div class="swiper-slide relative">
                 <div class="absolute inset-0 z-0">
                     <img src="{{ MEDIA_URL }}hero/hero_1.jpg" class="w-full h-full object-cover"
                         alt="Hero Background 1">
-                    <div class="absolute inset-0 bg-black bg-opacity-60"></div>
-                </div>
-                <div class="container mx-auto px-6 md:px-12 relative z-10 text-center text-white">
-                    <span class="text-xs uppercase tracking-[0.5em] font-black mb-8 block animate-fade-in-up">Step Into
-                        Your Natural Glow</span>
-                    <h1
-                        class="text-6xl md:text-9xl serif mb-12 leading-tight animate-fade-in-up [animation-delay:200ms]">
-                        Reveal Your <br><span class="italic text-jofa-gold">Absolute</span> Glow</h1>
-                    <div class="flex flex-col md:flex-row justify-center animate-fade-in-up [animation-delay:400ms]">
-                        <a href="{% url 'products:product_list' %}"
-                            class="btn-gold px-12 py-5 text-[11px] uppercase tracking-[0.3em] font-black">Shop Now</a>
-                    </div>
+                    <div class="absolute inset-0 bg-black bg-opacity-40"></div>
                 </div>
             </div>
             <!-- Slide 2 -->
-            <div class="swiper-slide relative flex items-center justify-center">
+            <div class="swiper-slide relative">
                 <div class="absolute inset-0 z-0">
                     <img src="{{ MEDIA_URL }}hero/hero_2.jpg" class="w-full h-full object-cover"
                         alt="Hero Background 2">
-                    <div class="absolute inset-0 bg-black bg-opacity-60"></div>
-                </div>
-                <div class="container mx-auto px-6 md:px-12 relative z-10 text-center text-white">
-                    <span class="text-xs uppercase tracking-[0.5em] font-black mb-8 block animate-fade-in-up">Step Into
-                        Your Natural Glow</span>
-                    <h1
-                        class="text-6xl md:text-9xl serif mb-12 leading-tight animate-fade-in-up [animation-delay:200ms]">
-                        Nature Meets <br><span class="italic text-jofa-gold">Science</span></h1>
-                    <div class="flex flex-col md:flex-row justify-center animate-fade-in-up [animation-delay:400ms]">
-                        <a href="{% url 'products:product_list' %}"
-                            class="btn-gold px-12 py-5 text-[11px] uppercase tracking-[0.3em] font-black">Explore
-                            Products</a>
-                    </div>
+                    <div class="absolute inset-0 bg-black bg-opacity-40"></div>
                 </div>
             </div>
             <!-- Slide 3 -->
-            <div class="swiper-slide relative flex items-center justify-center">
+            <div class="swiper-slide relative">
                 <div class="absolute inset-0 z-0">
                     <img src="{{ MEDIA_URL }}hero/hero_3.jpg" class="w-full h-full object-cover"
                         alt="Hero Background 3">
-                    <div class="absolute inset-0 bg-black bg-opacity-60"></div>
-                </div>
-                <div class="container mx-auto px-6 md:px-12 relative z-10 text-center text-white">
-                    <span class="text-xs uppercase tracking-[0.5em] font-black mb-8 block animate-fade-in-up">Step Into
-                        Your Natural Glow</span>
-                    <h1
-                        class="text-6xl md:text-9xl serif mb-12 leading-tight animate-fade-in-up [animation-delay:200ms]">
-                        Golden Glow <br><span class="italic text-jofa-gold">Daily</span></h1>
-                    <div class="flex flex-col md:flex-row justify-center animate-fade-in-up [animation-delay:400ms]">
-                        <a href="{% url 'products:product_list' %}"
-                            class="btn-gold px-12 py-5 text-[11px] uppercase tracking-[0.3em] font-black">Shop Oils</a>
-                    </div>
+                    <div class="absolute inset-0 bg-black bg-opacity-40"></div>
                 </div>
             </div>
             <!-- Slide 4 -->
-            <div class="swiper-slide relative flex items-center justify-center">
+            <div class="swiper-slide relative">
                 <div class="absolute inset-0 z-0">
                     <img src="{{ MEDIA_URL }}hero/hero_4.jpg" class="w-full h-full object-cover"
                         alt="Hero Background 4">
-                    <div class="absolute inset-0 bg-black bg-opacity-60"></div>
-                </div>
-                <div class="container mx-auto px-6 md:px-12 relative z-10 text-center text-white">
-                    <span class="text-xs uppercase tracking-[0.5em] font-black mb-8 block animate-fade-in-up">Step Into
-                        Your Natural Glow</span>
-                    <h1
-                        class="text-6xl md:text-9xl serif mb-12 leading-tight animate-fade-in-up [animation-delay:200ms]">
-                        Midnight <br><span class="italic text-jofa-gold">Recovery</span></h1>
-                    <div class="flex flex-col md:flex-row justify-center animate-fade-in-up [animation-delay:400ms]">
-                        <a href="{% url 'products:product_list' %}"
-                            class="btn-gold px-12 py-5 text-[11px] uppercase tracking-[0.3em] font-black">View Masks</a>
-                    </div>
+                    <div class="absolute inset-0 bg-black bg-opacity-40"></div>
                 </div>
             </div>
         </div>
         <!-- Pagination -->
         <div class="swiper-pagination"></div>
-        <!-- Navigation Arrows -->
-        <div class="swiper-button-next !text-white opacity-50 hover:opacity-100 transition-opacity"></div>
-        <div class="swiper-button-prev !text-white opacity-50 hover:opacity-100 transition-opacity"></div>
     </div>
 
     <!-- Swiper Styles/Scripts -->
@@ -127,7 +89,6 @@
                 loop: true,
                 autoplay: { delay: 5000, disableOnInteraction: false },
                 pagination: { el: ".swiper-pagination", clickable: true },
-                navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
                 effect: 'fade',
                 fadeEffect: { crossFade: true }
             });
@@ -136,7 +97,7 @@
 </section>
 
 <!-- Featured Products -->
-<section class="py-32 bg-white">
+<section class="py-32 bg-jofa-beige">
     <div class="container mx-auto px-6 md:px-12 text-center mb-24">
         <h2 class="text-[10px] uppercase tracking-[0.5em] font-black text-jofa-gold mb-4">The Rituals</h2>
         <h3 class="text-5xl serif text-jofa-dark font-black">Award-Winning Favorites</h3>
@@ -146,7 +107,7 @@
         {% for product in featured_products %}
         <div class="group">
             <div
-                class="aspect-[3/4] bg-jofa-offwhite mb-8 overflow-hidden relative shadow-lg group-hover:shadow-2xl transition-all duration-700">
+                class="aspect-[3/4] bg-jofa-beige mb-8 overflow-hidden relative shadow-lg group-hover:shadow-2xl transition-all duration-700">
                 {% if product.image %}
                 <img src="{{ product.image.url }}" alt="{{ product.name }}"
                     class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000">
@@ -158,7 +119,7 @@
                 <a href="{{ product.get_absolute_url }}"
                     class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-500">
                     <span
-                        class="bg-white text-black px-8 py-3 text-[10px] font-black uppercase tracking-widest opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500">Discover</span>
+                        class="bg-jofa-beige text-black px-8 py-3 text-[10px] font-black uppercase tracking-widest opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500">Discover</span>
                 </a>
             </div>
             <div class="text-center">
@@ -188,11 +149,11 @@
 </section>
 
 <!-- Community Testimonials Slider (Refined 3-Item View) -->
-<section class="py-32 bg-jofa-offwhite border-y border-gray-100 overflow-hidden">
+<section class="py-32 bg-jofa-beige border-y border-gray-100 overflow-hidden">
     <div class="container mx-auto px-6 md:px-12 text-center mb-16">
         <span class="text-xs uppercase tracking-[0.5em] font-black text-jofa-gold mb-6 block">Community
             Whispers</span>
-        <h2 class="text-5xl serif text-jofa-onyx font-black leading-tight">Shared Rituals</h2>
+        <h2 class="text-5xl serif text-jofa-onyx font-black leading-tight">Shared Testimonies</h2>
     </div>
 
     <div class="container mx-auto px-6 md:px-12">
@@ -201,23 +162,24 @@
                 {% for review in reviews %}
                 <div class="swiper-slide h-auto">
                     <div
-                        class="bg-white p-10 shadow-sm border border-gray-50 flex flex-col h-full hover:shadow-2xl transition-all duration-500 group">
+                        class="bg-jofa-beige p-10 shadow-sm border border-gray-50 flex flex-col h-full hover:shadow-2xl transition-all duration-500 group">
                         <div class="flex text-jofa-gold mb-8 group-hover:scale-110 transition-transform origin-left">
-                            {% for i in "12345"|make_list %}{% if forloop.counter <= review.rating %}★{% else %}☆{% endif %}{% endfor %} </div>
+                            {% for i in "12345"|make_list %}
+                            {% if forloop.counter <= review.rating %} ★ {% else %} ☆ {% endif %} {% endfor %} </div>
                                 <p class="text-lg text-gray-700 italic font-medium leading-loose mb-12 flex-grow">"{{ review.comment }}"</p>
                                 <div class="flex items-center space-x-4 border-t border-gray-50 pt-8 mt-auto">
                                     <div class="w-8 h-[1px] bg-jofa-gold"></div>
                                     <div>
                                         <h5 class="text-xs font-black uppercase tracking-[0.3em] text-jofa-onyx">{{ review.user.first_name|default:review.user.username }}</h5>
                                         <p class="text-[9px] uppercase tracking-widest text-jofa-gold font-bold mt-1">
-                                            Verified Ritualist</p>
+                                            Verified Reviewer</p>
                                     </div>
                                 </div>
                         </div>
                     </div>
                     {% empty %}
                     <div class="swiper-slide w-full">
-                        <div class="text-center py-24 bg-white border border-dashed border-gray-200">
+                        <div class="text-center py-24 bg-jofa-beige border border-dashed border-gray-200">
                             <p class="text-gray-400 italic text-xl">The ritual continues. Join our community to share
                                 your journey.</p>
                         </div>
@@ -286,7 +248,7 @@
                 </li>
             </ul>
             <a href="{% url 'core:about' %}"
-                class="btn-gold px-12 py-6 inline-block text-[11px] uppercase tracking-[0.3em] font-black shadow-2xl hover:bg-white hover:text-jofa-onyx transition-all duration-500">Discover
+                class="btn-gold px-6 md:px-8 md:px-12 py-3 md:py-4 md:py-6 inline-block text-[11px] uppercase tracking-[0.3em] font-black shadow-2xl hover:bg-jofa-beige hover:text-jofa-onyx transition-all duration-500">Discover
                 Our Universe</a>
         </div>
         <div class="relative group animate-fade-in-up [animation-delay:300ms]">
@@ -304,7 +266,7 @@
 </section>
 
 <!-- FAQs Quick View -->
-<section class="py-24 bg-white">
+<section class="py-24 bg-jofa-beige">
     <div class="container mx-auto px-6 md:px-12 max-w-4xl">
         <div class="text-center mb-16">
             <h2 class="text-4xl serif text-jofa-dark mb-4">Common Rituals & Inquiries</h2>
@@ -355,7 +317,7 @@
 </section>
 
 <!--Partners Section-- >
-    <section class="py-24 bg-jofa-offwhite border-t border-gray-50">
+    <section class="py-24 bg-jofa-beige border-t border-gray-50">
         <div class="container mx-auto px-6 md:px-12">
             <h2 class="text-center text-[10px] uppercase tracking-[0.4em] font-black text-gray-400 mb-16">Trusted By
                 World-Class Ateliers</h2>
@@ -380,13 +342,13 @@
 </section>
 
 <!--Blog Preview-- >
-                    <section class="py-24 bg-white">
+                    <section class="py-24 bg-jofa-beige">
                         <div class="container mx-auto px-6 md:px-12">
                             <h2 class="text-4xl serif text-jofa-dark mb-16 text-center">The Journal</h2>
                             <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
                                 {% for post in latest_posts %}
                                 <div class="group cursor-pointer">
-                                    <div class="overflow-hidden mb-6 aspect-video bg-jofa-offwhite shadow-lg">
+                                    <div class="overflow-hidden mb-6 aspect-video bg-jofa-beige shadow-lg">
                                         {% if post.image %}
                                         <img src="{{ post.image.url }}" alt="{{ post.title }}"
                                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">

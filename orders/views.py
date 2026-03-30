@@ -76,9 +76,23 @@ class CouponApplyView(View):
 
 class OrderCreateView(LoginRequiredMixin, CreateView):
     model = Order
-    fields = ['first_name', 'last_name', 'email', 'address', 'postal_code', 'city']
+    fields = ['first_name', 'last_name', 'email', 'address', 'postal_code', 'city', 'phone_number']
     template_name = 'orders/order_create.html'
     success_url = reverse_lazy('core:home')
+
+    def get_initial(self):
+        initial = super().get_initial()
+        if self.request.user.is_authenticated:
+            # We don't have first/last name on User model by default in some setups, but usually they exist.
+            # Profiles were added earlier with phone and address.
+            initial['first_name'] = self.request.user.first_name
+            initial['last_name'] = self.request.user.last_name
+            initial['email'] = self.request.user.email
+            if hasattr(self.request.user, 'profile'):
+                initial['address'] = self.request.user.profile.address
+                initial['city'] = self.request.user.profile.city
+                initial['phone_number'] = self.request.user.profile.phone
+        return initial
 
     def form_valid(self, form):
         cart = Cart(self.request)
