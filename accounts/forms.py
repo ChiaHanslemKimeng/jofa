@@ -19,8 +19,9 @@ class UserUpdateForm(forms.ModelForm):
 class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ['phone', 'address', 'city', 'country']
+        fields = ['image', 'phone', 'address', 'city', 'country']
         widgets = {
+            'image': forms.FileInput(attrs={'class': 'w-full border border-gray-100 p-4 font-light text-sm outline-none focus:border-jofa-gold transition-colors'}),
             'phone': forms.TextInput(attrs={'class': 'w-full border border-gray-100 p-4 font-light text-sm outline-none focus:border-jofa-gold transition-colors'}),
             'address': forms.Textarea(attrs={'class': 'w-full border border-gray-100 p-4 font-light text-sm outline-none focus:border-jofa-gold transition-colors', 'rows': 3}),
             'city': forms.TextInput(attrs={'class': 'w-full border border-gray-100 p-4 font-light text-sm outline-none focus:border-jofa-gold transition-colors'}),

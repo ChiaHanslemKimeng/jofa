@@ -9,6 +9,7 @@ class Profile(models.Model):
     address = models.TextField(blank=True)
     city = models.CharField(max_length=100, blank=True)
     country = models.CharField(max_length=100, blank=True)
+    image = models.ImageField(upload_to='profile_pics/', default='profile_pics/default.jpg', blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

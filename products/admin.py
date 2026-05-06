@@ -1,5 +1,9 @@
 from django.contrib import admin
-from .models import Category, Product, Coupon
+from .models import Category, Product, Coupon, ProductImage
+
+class ProductImageInline(admin.TabularInline):
+    model = ProductImage
+    extra = 1
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
@@ -8,11 +12,12 @@ class CategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ['name', 'category', 'price', 'stock', 'available', 'featured', 'created_at']
+    list_display = ['name', 'category', 'price', 'discount_percentage', 'stock', 'available', 'featured', 'created_at']
     list_filter = ['available', 'featured', 'created_at', 'category', 'skin_type']
-    list_editable = ['price', 'stock', 'available', 'featured']
+    list_editable = ['price', 'discount_percentage', 'stock', 'available', 'featured']
     prepopulated_fields = {'slug': ('name',)}
     search_fields = ['name', 'description', 'ingredients']
+    inlines = [ProductImageInline]
 
 @admin.register(Coupon)
 class CouponAdmin(admin.ModelAdmin):

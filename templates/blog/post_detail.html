@@ -28,12 +28,12 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
                 </svg> Back to Blogs
             </a>
-            <div class="flex space-x-6 text-[10px] uppercase tracking-widest font-bold">
+            <div class="flex flex-wrap gap-6 text-[10px] uppercase tracking-widest font-bold">
                 <span class="text-gray-400">Share This Post:</span>
-                <a href="https://www.facebook.com/share/1YqrQq3rCT/?mibextid=wwXIfr" class="hover:text-jofa-gold">Facebook</a>
-                <a href="https://www.tiktok.com/share/1YqrQq3rCT/?mibextid=wwXIfr" class="hover:text-jofa-gold">Tiktok</a>
-                <a href="https://www.instagram.com/share/1YqrQq3rCT/?mibextid=wwXIfr" class="hover:text-jofa-gold">Instagram</a>
-                <a href="https://www.pinterest.com/share/1YqrQq3rCT/?mibextid=wwXIfr" class="hover:text-jofa-gold">Pinterest</a>
+                <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" target="_blank" class="hover:text-jofa-gold transition-colors">Facebook</a>
+                <a href="https://twitter.com/intent/tweet?url={{ request.build_absolute_uri }}&text={{ post.title|urlencode }}" target="_blank" class="hover:text-jofa-gold transition-colors">Twitter</a>
+                <a href="https://wa.me/?text={{ post.title|urlencode }}%20{{ request.build_absolute_uri }}" target="_blank" class="hover:text-jofa-gold transition-colors">WhatsApp</a>
+                <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ request.build_absolute_uri }}" target="_blank" class="hover:text-jofa-gold transition-colors">LinkedIn</a>
             </div>
         </div>
     </div>

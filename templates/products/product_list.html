@@ -5,51 +5,79 @@
 {% block content %}
 <section class="py-24 bg-jofa-beige min-h-screen">
     <div class="container mx-auto px-6 md:px-12">
-        <div class="flex flex-col md:flex-row justify-between items-end mb-16">
+        <div class="flex flex-col md:flex-row justify-between items-end mb-16" data-aos="fade-up">
             <div class="max-w-2xl">
-                <h1 class="text-6xl serif text-jofa-onyx mb-6 tracking-tight">The <span
-                        class="text-jofa-gold">Collection</span></h1>
-                <p class="text-lg text-gray-600 font-medium leading-relaxed">Our curated selection of botanical
-                    essentials, meticulously formulated for your skin's unique journey.</p>
+                <h1 class="text-6xl serif text-jofa-onyx mb-6 tracking-tight">The <span class="text-jofa-gold">Collection</span></h1>
+                <p class="text-lg text-gray-600 font-medium leading-relaxed">Our curated selection of botanical essentials, meticulously formulated for your skin's unique journey.</p>
             </div>
-            <div class="mt-8 md:mt-0 flex items-center space-x-6">
-                <!-- Layout Toggle -->
-                <div
-                    class="flex items-center bg-white/50 backdrop-blur-sm p-1 rounded-sm border border-gray-100 shadow-sm no-print">
-                    <button onclick="setGridLayout('focus')" id="btn-focus"
-                        class="p-2 transition-all duration-300 rounded-sm hover:bg-white"
-                        title="Focus View (Large Icons)">
-                        <svg class="w-5 h-5 text-jofa-onyx" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
-                        </svg>
-                    </button>
-                    <button onclick="setGridLayout('compact')" id="btn-compact"
-                        class="p-2 transition-all duration-300 rounded-sm hover:bg-white"
-                        title="Compact View (Small Icons)">
-                        <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M4 5a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM9 5a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 01-1 1h-2a1 1 0 01-1-1V5zM14 5a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 01-1 1h-2a1 1 0 01-1-1V5zM4 10a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1v-2zM9 10a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 01-1 1h-2a1 1 0 01-1-1v-2zM14 10a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 01-1 1h-2a1 1 0 01-1-1v-2zM4 15a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1v-2zM9 15a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 01-1 1h-2a1 1 0 01-1-1v-2zM14 15a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 01-1 1h-2a1 1 0 01-1-1v-2z" />
-                        </svg>
-                    </button>
+            <!-- Layout Toggle -->
+            <div class="hidden md:flex items-center bg-white/50 backdrop-blur-sm p-1 rounded-sm border border-gray-100 shadow-sm no-print mb-1">
+                <button onclick="setGridLayout('focus')" id="btn-focus" class="p-2 transition-all duration-300 rounded-sm hover:bg-white" title="Focus View">
+                    <svg class="w-5 h-5 text-jofa-onyx" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" /></svg>
+                </button>
+                <button onclick="setGridLayout('compact')" id="btn-compact" class="p-2 transition-all duration-300 rounded-sm hover:bg-white" title="Compact View">
+                    <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM9 5a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 01-1 1h-2a1 1 0 01-1-1V5zM14 5a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 01-1 1h-2a1 1 0 01-1-1V5zM4 10a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1v-2zM9 10a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 01-1 1h-2a1 1 0 01-1-1v-2zM14 10a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 01-1 1h-2a1 1 0 01-1-1v-2zM4 15a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1v-2zM9 15a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 01-1 1h-2a1 1 0 01-1-1v-2zM14 15a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 01-1 1h-2a1 1 0 01-1-1v-2z" /></svg>
+                </button>
+            </div>
+        </div>
+
+        <div class="mb-12" data-aos="fade-up">
+            <form method="get" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 items-end">
+                <!-- Search -->
+                <div class="space-y-2">
+                    <label class="text-[9px] font-black uppercase tracking-widest text-gray-400">Search Essence</label>
+                    <input type="text" name="q" value="{{ request.GET.q }}" placeholder="Floral, Serum..."
+                        class="w-full bg-white border border-gray-200 p-4 text-[10px] font-bold outline-none focus:ring-1 ring-jofa-gold">
                 </div>
-                <form method="get" class="w-full md:w-auto">
-                    <select name="category" onchange="this.form.submit()"
-                        class="w-full md:w-auto bg-jofa-beige border border-gray-300 p-4 text-[10px] font-black uppercase tracking-widest outline-none focus:ring-1 ring-jofa-gold shadow-sm appearance-none cursor-pointer">
-                        <option value="">Filter by Ritual</option>
+
+                <!-- Category -->
+                <div class="space-y-2">
+                    <label class="text-[9px] font-black uppercase tracking-widest text-gray-400">Category</label>
+                    <select name="category" class="w-full bg-white border border-gray-200 p-4 text-[10px] font-bold outline-none focus:ring-1 ring-jofa-gold appearance-none cursor-pointer">
+                        <option value="">All Categories</option>
                         {% for cat in categories %}
                         <option value="{{ cat.slug }}" {% if request.GET.category == cat.slug %}selected{% endif %}>{{ cat.name }}</option>
                         {% endfor %}
                     </select>
-                </form>
-            </div>
+                </div>
+
+                <!-- Price Range -->
+                <div class="space-y-2">
+                    <label class="text-[9px] font-black uppercase tracking-widest text-gray-400">Price Range (XAF)</label>
+                    <div class="flex space-x-2">
+                        <input type="number" name="min_price" value="{{ request.GET.min_price }}" placeholder="Min"
+                            class="w-1/2 bg-white border border-gray-200 p-4 text-[10px] font-bold outline-none focus:ring-1 ring-jofa-gold">
+                        <input type="number" name="max_price" value="{{ request.GET.max_price }}" placeholder="Max"
+                            class="w-1/2 bg-white border border-gray-200 p-4 text-[10px] font-bold outline-none focus:ring-1 ring-jofa-gold">
+                    </div>
+                </div>
+
+                <!-- Sort By -->
+                <div class="space-y-2">
+                    <label class="text-[9px] font-black uppercase tracking-widest text-gray-400">Sort By</label>
+                    <select name="sort" class="w-full bg-white border border-gray-200 p-4 text-[10px] font-bold outline-none focus:ring-1 ring-jofa-gold appearance-none cursor-pointer">
+                        <option value="newest" {% if request.GET.sort == 'newest' %}selected{% endif %}>Newest Arrivals</option>
+                        <option value="price_asc" {% if request.GET.sort == 'price_asc' %}selected{% endif %}>Price: Low to High</option>
+                        <option value="price_desc" {% if request.GET.sort == 'price_desc' %}selected{% endif %}>Price: High to Low</option>
+                    </select>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="flex space-x-2">
+                    <button type="submit" class="flex-grow bg-jofa-onyx text-white p-4 text-[10px] font-black uppercase tracking-widest hover:bg-jofa-gold transition-colors shadow-lg">Filter</button>
+                    <a href="{% url 'products:product_list' %}" class="bg-gray-100 text-gray-400 p-4 hover:text-jofa-onyx transition-colors" title="Clear Filters">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                    </a>
+                </div>
+            </form>
         </div>
 
         <div id="product-grid"
             class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 transition-all duration-700 ease-in-out">
             {% for product in products %}
             <div
-                class="group relative aspect-[3/4] overflow-hidden bg-jofa-beige shadow-sm hover:shadow-2xl transition-all duration-700">
+                class="group relative aspect-[3/4] overflow-hidden bg-jofa-beige shadow-sm hover:shadow-2xl transition-all duration-700"
+                data-aos="fade-up" data-aos-delay="{{ forloop.counter }}00">
                 <!-- Product Image -->
                 {% if product.image %}
                 <img src="{{ product.image.url }}" alt="{{ product.name }}"
@@ -64,6 +92,12 @@
                 <div class="absolute top-3 left-3 flex flex-col space-y-1.5 z-20">
                     <span
                         class="bg-jofa-beige/90 backdrop-blur-sm text-black text-[7px] font-black uppercase tracking-widest px-2 py-1 shadow-sm">{{ product.category.name }}</span>
+                    
+                    {% if product.discount_percentage > 0 %}
+                    <span
+                        class="bg-black/90 backdrop-blur-sm text-white text-[7px] font-black uppercase tracking-widest px-2 py-1 shadow-sm">{{ product.discount_percentage }}% OFF</span>
+                    {% endif %}
+
                     {% for coupon in product.coupons.all %}
                     {% if coupon.is_valid %}
                     <span

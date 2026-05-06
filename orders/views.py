@@ -119,6 +119,18 @@ class OrderCreateView(LoginRequiredMixin, CreateView):
             # award_points is now handled by the post_save signal on Order completion
 
         cart.clear()
+        
+        # Send confirmation email
+        try:
+            from core.utils import send_order_confirmation
+            send_order_confirmation(order, self.request)
+            from django.contrib import messages
+            messages.success(self.request, "Order placed successfully! A confirmation email has been sent.")
+        except Exception as e:
+            print(f"Error sending email: {e}")
+            from django.contrib import messages
+            messages.success(self.request, "Order placed successfully!")
+            
         return super().form_valid(form)
 
 class OrderHistoryView(LoginRequiredMixin, ListView):

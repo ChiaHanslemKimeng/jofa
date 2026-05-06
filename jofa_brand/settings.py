@@ -143,7 +143,17 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Auth settings
 LOGIN_REDIRECT_URL = 'core:home'
-LOGOUT_REDIRECT_URL = 'core:home'
+LOGOUT_REDIRECT_URL = None # Allow admin to use its default, storefront handled in views
 LOGIN_URL = 'accounts:login'
 
 CART_SESSION_ID = 'cart'
+
+# Email Configuration (GMAIL SMTP)
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'jofaskincare@gmail.com'
+EMAIL_HOST_PASSWORD = 'bfai uxwx nkrl elrz'
+DEFAULT_FROM_EMAIL = 'JOFA Essence <jofaskincare@gmail.com>'
+ADMIN_EMAIL = 'jofaskincare@gmail.com'
